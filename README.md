@@ -141,43 +141,12 @@ Response: { "success": boolean, "basic": object, "risk": object, "recent": objec
 - ✅ No third-party data sharing
 - ✅ GDPR-compliant architecture
 
-## Deployment
-
-### Using Gunicorn (Production)
-```bash
-pip install gunicorn
-gunicorn -w 4 -b 0.0.0.0:8000 app.main:app
-```
-
-### Using Docker
-```bash
-docker build -t mental-health-chatbot .
-docker run -p 5000:5000 mental-health-chatbot
-```
-
 ### Environment Variables for Production
 ```env
 FLASK_ENV=production
 SECRET_KEY=<random-strong-key>
 DATABASE_URL=postgresql://user:password@host:5432/dbname
 ```
-
-## Development
-
-### Running Tests
-```bash
-python -m pytest
-```
-
-### Code Style
-```bash
-black . --line-length=88
-pylint app ml db analytics
-```
-
-### Logs
-Check `app.log` for detailed application logs.
-
 ## Contributing
 
 Contributions are welcome! Please:

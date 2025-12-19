@@ -57,47 +57,6 @@ The chatbot uses:
 
 Models are automatically downloaded on first run and cached locally.
 
-## Performance Tuning
-
-### Reduce Memory Usage
-```python
-# Use CPU instead of GPU
-import os
-os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
-```
-
-### Speed Up Inference
-```python
-# Use quantized models for faster inference
-# Requires: pip install optimum onnxruntime
-```
-
-## Production Deployment
-
-### Using Gunicorn
-```bash
-pip install gunicorn
-gunicorn -w 4 -b 0.0.0.0:8000 app.main:app
-```
-
-### Using Docker
-Create `Dockerfile`:
-```dockerfile
-FROM python:3.10-slim
-WORKDIR /app
-COPY requirements.txt .
-RUN pip install -r requirements.txt
-COPY . .
-EXPOSE 5000
-CMD ["python", "run.py"]
-```
-
-Build and run:
-```bash
-docker build -t mental-health-chatbot .
-docker run -p 5000:5000 mental-health-chatbot
-```
-
 ## Security Considerations
 
 1. **Never commit `.env` file to version control**
@@ -123,14 +82,5 @@ docker run -p 5000:5000 mental-health-chatbot
 - Reduce model size (use distilled models)
 - Implement model quantization
 - Use CPU-only inference
-
-## Logging
-
-To enable detailed logging:
-
-```python
-import logging
-logging.basicConfig(level=logging.DEBUG)
-```
 
 Add to `run.py` for development debugging.
