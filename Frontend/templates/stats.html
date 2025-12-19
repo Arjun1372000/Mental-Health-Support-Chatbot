@@ -1,70 +1,101 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Mood History</title>
+  <title>Mood Stats</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     body {
       font-family: Arial, sans-serif;
       text-align: center;
       margin: 40px;
+      padding-bottom: 120px;
     }
-    canvas {
-      max-width: 800px;
+
+    .chart-container {
+      width: 95%;
+      max-width: 1300px;
+      height: 550px;
       margin: auto;
     }
+
+    footer {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      padding: 18px 0;
+      background: linear-gradient(180deg, #f7f7ff, #eeeeff);
+      border-top: 1px solid #ddd;
+      text-align: center;
+    }
+
+    .footer-title {
+      font-size: 20px;
+      font-weight: 600;
+      color: #333;
+    }
+
+    .footer-subtitle {
+      font-size: 13px;
+      color: #666;
+    }
+
+    button {
+      padding: 10px 20px;
+      border-radius: 25px;
+      border: none;
+      background: #6c63ff;
+      color: white;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+
+    
   </style>
 </head>
 
 <body>
-  <h2>Your Mood History</h2>
+
+<h2>Your Mood History</h2>
+
+<div class="chart-container">
   <canvas id="moodChart"></canvas>
+</div>
 
-  <script>
-    fetch("/mood_data")
-      .then(res => res.json())
-      .then(data => {
-        const labels = data.map(item => item.time);
-        const moods = data.map(item => item.mood);
+<button onclick="window.location.href='/'">⬅ Back</button>
 
-        const moodMap = {
-          excited: 5,
-          happy: 4,
-          neutral: 3,
-          sad: 2,
-          stressed: 1
-        };
+<footer>
+  <div class="footer-title">Mānasika</div>
+  <div class="footer-subtitle">by Data Sapiens</div>
+</footer>
 
-        const values = moods.map(m => moodMap[m]);
+<script>
+fetch("/mood_data")
+  .then(res => res.json())
+  .then(data => {
+    const labels = data.map(d => d.time);
+    const moodMap = { excited:5, happy:4, neutral:3, sad:2, stressed:1 };
+    const values = data.map(d => moodMap[d.mood]);
 
-        new Chart(document.getElementById("moodChart"), {
-          type: "line",
-          data: {
-            labels: labels,
-            datasets: [{
-              label: "Mood Level",
-              data: values,
-              borderColor: "#6c63ff",
-              backgroundColor: "rgba(108,99,255,0.2)",
-              tension: 0.3,
-              fill: true
-            }]
-          },
-          options: {
-            scales: {
-              y: {
-                ticks: {
-                  callback: value => {
-                    return Object.keys(moodMap).find(
-                      key => moodMap[key] === value
-                    );
-                  }
-                }
-              }
-            }
-          }
-        });
-      });
-  </script>
+    new Chart(document.getElementById("moodChart"), {
+      type: "line",
+      data: {
+        labels: labels,
+        datasets: [{
+          label: "Mood Level",
+          data: values,
+          borderColor: "#6c63ff",
+          backgroundColor: "rgba(108,99,255,0.2)",
+          fill: true,
+          tension: 0.3
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false
+      }
+    });
+  });
+</script>
+
 </body>
 </html>
