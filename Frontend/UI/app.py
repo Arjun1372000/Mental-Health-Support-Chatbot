@@ -6,15 +6,11 @@ import random
 
 from database import init_db, get_mood_history, save_mood as db_save_mood
 
-# -------------------------
-# App Setup
-# -------------------------
+# Setup
 app = Flask(__name__)
 init_db()
 
-# -------------------------
-# Emotion Detection (FAST)
-# -------------------------
+# Emotion Detection 
 sia = SentimentIntensityAnalyzer()
 
 def detect_emotion(text):
@@ -27,9 +23,7 @@ def detect_emotion(text):
     else:
         return "neutral", round(score, 2)
 
-# -------------------------
 # Chatbot Model (LOCAL)
-# -------------------------
 chatbot = pipeline(
     "text-generation",
     model="distilgpt2",
@@ -38,14 +32,10 @@ chatbot = pipeline(
     top_p=0.95
 )
 
-# -------------------------
 # Memory
-# -------------------------
 chat_logs = []
 
-# -------------------------
 # Chatbot Response Logic
-# -------------------------
 def generate_llm_response(user_text, emotion):
     prompt = (
         "You are a compassionate mental health support chatbot.\n"
@@ -79,9 +69,7 @@ def generate_llm_response(user_text, emotion):
         }
         return fallback.get(emotion, fallback["neutral"])
 
-# -------------------------
 # Routes
-# -------------------------
 @app.route("/")
 def home():
     return render_template("index.html")
@@ -143,8 +131,5 @@ def mood_data():
 def stats_view():
     return render_template("stats.html")
 
-# -------------------------
-# Run
-# -------------------------
 if __name__ == "__main__":
     app.run(debug=True)
