@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Mood Check-In</title>
+  <title>Mānasika</title>
   <style>
     body {
       font-family: Arial, sans-serif;
       text-align: center;
       margin-top: 60px;
+      padding-bottom: 120px;
     }
 
     .top-left {
@@ -25,103 +26,169 @@
 
     .action-btn {
       margin: 10px;
-      padding: 10px 18px;
+      padding: 10px 20px;
       font-size: 15px;
-      border-radius: 20px;
+      border-radius: 25px;
       border: none;
       cursor: pointer;
       background-color: #6c63ff;
       color: white;
     }
 
-    .hidden {
-      display: none;
-    }
-
-    .fade {
-      animation: fade 0.5s;
-    }
-
-    .send-btn {
-    padding: 10px 16px;
-    font-size: 14px;
-    border-radius: 25px;
-    border: none;
-    background-color: #6c63ff;
-    color: white;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s;
-  }
-
-  .send-btn:hover {
-    background-color: #574fe0;
-    transform: scale(1.05);
-  }
-
-  .tabs {
-    margin: 20px 0;
-  }
-
-  .tabs button {
-    margin: 5px;
-    padding: 8px 14px;
-    border-radius: 20px;
-    border: 1px solid #ccc;
-    background: white;
-    cursor: pointer;
-  }
-
-  .tabs button:hover {
-    background-color: #f0f0ff;
-  }
-
-  .blog-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 20px;
-    margin-top: 20px;
-  }
-
-  .blog-card {
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    overflow: hidden;
-    text-align: left;
-    cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
-  }
-
-  .blog-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  }
-
-  .blog-card img {
-    width: 100%;
-    height: 140px;
-    object-fit: cover;
-  }
-
-  .blog-card h4 {
-    padding: 10px;
-    font-size: 15px;
-  }
+    .hidden { display: none; }
+    .fade { animation: fade 0.4s; }
 
     @keyframes fade {
       from { opacity: 0; }
       to { opacity: 1; }
     }
+
+    .tabs button {
+      margin: 6px;
+      padding: 8px 16px;
+      border-radius: 20px;
+      border: 1px solid #ccc;
+      background: white;
+      cursor: pointer;
+    }
+
+/* BLOG GRID */
+.blog-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 24px;
+  margin-top: 30px;
+  padding: 0 40px;
+}
+
+/* BLOG CARD */
+.blog-card {
+  background: #ffffff;
+  border-radius: 14px;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.blog-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 14px 32px rgba(0,0,0,0.12);
+}
+
+/* IMAGE */
+.blog-card img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+}
+
+/* TITLE */
+.blog-card h4 {
+  padding: 14px 16px 18px;
+  font-size: 16px;
+  line-height: 1.4;
+  font-weight: 600;
+}
+
+.note-container {
+  display: flex;
+  justify-content: center;
+  margin: 40px 0;
+}
+
+.note {
+  width: 320px;
+  height: 190px;
+  background: #fffbe6;
+  border-radius: 14px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+  padding: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  transform-origin: top;
+  transition: transform 0.6s ease, opacity 0.6s ease;
+  overflow: hidden;
+}
+
+.note.folded {
+  transform: scaleY(0.1);
+  opacity: 0.3;
+}
+
+.note.unfolded {
+  transform: scaleY(1);
+  opacity: 1;
+}
+
+.note p {
+  font-size: 18px;
+  line-height: 1.6;
+  color: #444;
+  margin: 0;
+  max-width: 90%;
+  font-family: "Georgia", serif;
+}
+
+/* App Title */
+.app-title {
+  font-family: "Georgia", serif;
+  font-size: 50px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  margin-bottom: 6px;
+  color: #2c2c2c;
+}
+
+.app-tagline {
+  font-size: 16px;
+  color: #777;
+  margin-bottom: 30px;
+}
+
+    footer {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      padding: 18px 0;
+      background: linear-gradient(180deg, #f7f7ff, #eeeeff);
+      border-top: 1px solid #ddd;
+      text-align: center;
+    }
+
+    .footer-title {
+      font-size: 20px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      color: #333;
+    }
+
+    .footer-subtitle {
+      font-size: 13px;
+      margin-top: 4px;
+      color: #666;
+    }
   </style>
 </head>
+
 <body>
 
-<!-- 🔹 TOP LEFT STATS -->
+<!-- TOP LEFT -->
 <div class="top-left">
   <button class="action-btn" onclick="openStats()">📊 Mood Stats</button>
 </div>
 
-<!-- Screen 1: Home -->
+<div>
+  <div class="app-title">Mānasika</div>
+  <div class="app-tagline">मनः स्वस्थ्याय सहचरः</div>
+</div>
+
+<!-- SCREEN 1 -->
 <div id="screen1">
+  <br>
   <h2>How are you feeling today?</h2>
 
   <button class="mood-btn" onclick="selectMood('excited')">😄</button>
@@ -134,218 +201,168 @@
 
   <button class="action-btn" onclick="openCalm()">🧘 Calm Space</button>
   <button class="action-btn" onclick="openBlogs()">📖 Read Blogs</button>
+
+  <button class="action-btn" onclick="openAffirmations()">🌸 Affirmations</button>
+
 </div>
 
-<!-- Screen 2 -->
+<!-- SCREEN 2 -->
 <div id="screen2" class="hidden fade">
   <h2 id="empathyText"></h2>
   <p>Do you want to talk about it?</p>
-  <button class="action-btn" onclick="goToChat()">Yes, let’s talk</button>
+  <button class="action-btn" onclick="openExternalChat()">Yes, let’s talk</button><br>
+  <button class="action-btn" onclick="goHome()">⬅ Back</button>
 </div>
 
-<!-- Screen 3: Chat -->
-<div id="screen3" class="hidden fade">
-  <h2>I’m here to listen</h2>
-
-  <div style="margin: 20px;">
-    <input id="userInput" type="text"
-           placeholder="Type how you’re feeling..."
-           style="width: 60%; padding: 10px;" />
-    <button class="send-btn" onclick="sendMessage()">Send</button>
-  </div>
-
-  <p id="botReply"></p>
-</div>
-
-<!-- Screen 5: Calm Space -->
+<!-- SCREEN 5 -->
 <div id="screen5" class="hidden fade">
   <h2>🧘 Calm Space</h2>
+  <p>Breathe in… Hold… Breathe out…</p>
 
-  <p style="font-size: 18px; margin-bottom: 10px;">
-    Let’s slow things down for a moment.
-  </p>
+  <iframe
+    src="https://www.youtube.com/embed/aNXKjGFUlMs"
+    style="width:80%;max-width:800px;aspect-ratio:16/9;border-radius:12px;"
+    allowfullscreen>
+  </iframe>
 
-  <p style="margin-bottom: 20px;">
-    Breathe in… Hold… Breathe out…
-  </p>
-
-  <!-- Video Container -->
-  <div style="
-    display: flex;
-    justify-content: center;
-    margin: 20px 0;
-  ">
-    <iframe
-      src="https://www.youtube.com/embed/aNXKjGFUlMs"
-      title="Breathing Exercise"
-      style="
-        width: 80%;
-        max-width: 720px;
-        aspect-ratio: 16 / 9;
-        border-radius: 12px;
-      "
-      frameborder="0"
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-      allowfullscreen>
-    </iframe>
-  </div>
-
-  <p style="margin-top: 15px;">
-    Stay here for as long as you need.
-  </p>
-
-  <button class="action-btn" onclick="goHome()" style="margin-top: 20px;">
-    Back
-  </button>
+  <br><br>
+  <button class="action-btn" onclick="goHome()">⬅ Back</button>
 </div>
 
-
-
-<!-- Screen 6: Blogs -->
+<!-- SCREEN 6 -->
 <div id="screen6" class="hidden fade">
   <h2>📖 Read & Reflect</h2>
 
-  <!-- Tabs -->
   <div class="tabs">
     <button onclick="showBlogs('happy')">😊 Happy</button>
-    <button onclick="showBlogs('stress')">😣 Stress Relief</button>
+    <button onclick="showBlogs('stress')">😣 Stress</button>
     <button onclick="showBlogs('anger')">😡 Anger</button>
     <button onclick="showBlogs('calm')">🧘 Calm</button>
   </div>
 
-  <!-- Blog Grid -->
   <div id="blogGrid" class="blog-grid"></div>
 
   <br>
-  <button class="action-btn" onclick="goHome()">Back</button>
+  <button class="action-btn" onclick="goHome()">⬅ Back</button>
+</div>
+
+<!-- SCREEN 8: Affirmations -->
+<div id="screen8" class="hidden fade">
+  <h2>🌸 A Note for You</h2>
+
+  <div class="note-container">
+    <div id="note" class="note folded">
+      <p id="affirmationText"></p>
+    </div>
+  </div>
+
+  <button class="action-btn" onclick="rollAffirmation()">🎲 Roll Affirmation</button>
+  <br><br>
+  <button class="action-btn" onclick="goHome()">⬅ Back</button>
 </div>
 
 
+<!-- FOOTER -->
+<footer>
+  <div class="footer-title">Mānasika</div>
+  <div class="footer-subtitle">by Data Sapiens</div>
+</footer>
+
 <script>
 function hideAll() {
-  ["screen1","screen2","screen3","screen5","screen6"]
+  ["screen1","screen2","screen5","screen6","screen8"]
     .forEach(id => document.getElementById(id).classList.add("hidden"));
 }
 
 function selectMood(mood) {
   fetch("/save_mood", {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ mood })
+    headers: {"Content-Type":"application/json"},
+    body: JSON.stringify({mood})
   });
 
   hideAll();
 
-  const messages = {
-    excited: "That’s wonderful! I love that energy ✨",
-    happy: "I’m glad you’re feeling happy today 😊",
-    neutral: "Thanks for checking in. I’m here with you.",
-    sad: "I’m really sorry you’re feeling sad 💙",
-    stressed: "That sounds heavy. Let’s take this slowly."
+  const msg = {
+    excited:"That’s wonderful ✨",
+    happy:"I’m glad you’re feeling happy 😊",
+    neutral:"Thanks for checking in.",
+    sad:"I’m really sorry you’re feeling sad 💙",
+    stressed:"That sounds heavy."
   };
 
-  document.getElementById("empathyText").innerText = messages[mood];
+  document.getElementById("empathyText").innerText = msg[mood];
   document.getElementById("screen2").classList.remove("hidden");
 }
 
-function goToChat() {
-  hideAll();
-  document.getElementById("screen3").classList.remove("hidden");
+function openCalm(){ hideAll(); screen5.classList.remove("hidden"); }
+function openBlogs(){ hideAll(); screen6.classList.remove("hidden"); }
+function goHome(){ hideAll(); screen1.classList.remove("hidden"); }
+function openStats(){ window.location.href="/stats_view"; }
+
+function openExternalChat(){
+  window.open("http://172.16.46.37:8501","_blank");
 }
 
-function sendMessage() {
-  const input = document.getElementById("userInput").value;
-  if (!input) return;
-
-  fetch("/ai_chat", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ message: input })
-  })
-    .then(res => res.json())
-    .then(data => {
-      document.getElementById("botReply").innerText = data.reply;
-    });
-
-  document.getElementById("userInput").value = "";
-}
-
-function openStats() {
-  window.location.href = "/stats_view";
-}
-
-function openCalm() {
-  hideAll();
-  document.getElementById("screen5").classList.remove("hidden");
-}
-
-function openBlogs() {
-  hideAll();
-  document.getElementById("screen6").classList.remove("hidden");
-}
-
-function goHome() {
-  hideAll();
-  document.getElementById("screen1").classList.remove("hidden");
-}
 const blogs = {
   happy: [
     {
       title: "Finding Joy in Small Moments",
-      img: "https://picsum.photos/400/300?random=11",
-      link: "https://medium.com/@mindful"
+      img: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e",
+      link: "https://medium.com/tag/happiness"
     },
     {
       title: "Why Happiness Is a Practice",
-      img: "https://picsum.photos/400/300?random=12",
-      link: "https://medium.com/@personal-growth"
+      img: "https://images.unsplash.com/photo-1499209974431-9dddcece7f88",
+      link: "https://medium.com/tag/mindfulness"
     },
     {
       title: "The Science of Feeling Good",
-      img: "https://picsum.photos/400/300?random=13",
-      link: "https://medium.com/@psychology"
+      img: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f",
+      link: "https://medium.com/tag/psychology"
     }
   ],
 
   stress: [
     {
       title: "How to Calm Your Mind When Stressed",
-      img: "https://picsum.photos/400/300?random=21",
-      link: "https://medium.com/@anxiety"
+      img: "https://images.unsplash.com/photo-1506126613408-eca07ce68773",
+      link: "https://medium.com/tag/stress"
     },
     {
       title: "Simple Ways to Reduce Daily Stress",
-      img: "https://picsum.photos/400/300?random=22",
-      link: "https://medium.com/@mentalhealth"
+      img: "https://images.unsplash.com/photo-1518611012118-696072aa579a",
+      link: "https://medium.com/tag/mental-health"
     }
   ],
 
   anger: [
     {
       title: "Understanding Anger Without Judgement",
-      img: "https://picsum.photos/400/300?random=31",
-      link: "https://medium.com/@emotions"
+      img: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee",
+      link: "https://medium.com/tag/emotions"
     },
     {
       title: "Healthy Ways to Process Anger",
-      img: "https://picsum.photos/400/300?random=32",
-      link: "https://medium.com/@selfgrowth"
+      img: "https://images.unsplash.com/photo-1501785888041-af3ef285b470",
+      link: "https://medium.com/tag/self-growth"
     }
   ],
 
   calm: [
     {
       title: "The Power of Slowing Down",
-      img: "https://picsum.photos/400/300?random=41",
-      link: "https://medium.com/@mindfulness"
+      img: "https://images.unsplash.com/photo-1502082553048-f009c37129b9",
+      link: "https://medium.com/tag/mindfulness"
     },
     {
       title: "Breathing Techniques for Inner Peace",
-      img: "https://picsum.photos/400/300?random=42",
-      link: "https://medium.com/@wellbeing"
+      img: "https://images.unsplash.com/photo-1504198458649-3128b932f49b",
+      link: "https://medium.com/tag/wellbeing"
     }
   ]
 };
+
 
 function showBlogs(category) {
   const grid = document.getElementById("blogGrid");
@@ -353,11 +370,9 @@ function showBlogs(category) {
 
   blogs[category].forEach(blog => {
     const card = document.createElement("a");
+    card.className = "blog-card";
     card.href = blog.link;
     card.target = "_blank";
-    card.className = "blog-card";
-    card.style.textDecoration = "none";
-    card.style.color = "inherit";
 
     card.innerHTML = `
       <img src="${blog.img}" alt="Blog image">
@@ -367,6 +382,77 @@ function showBlogs(category) {
     grid.appendChild(card);
   });
 }
+
+let latestMood = "neutral";
+
+/* Fetch latest mood from backend */
+function loadLatestMood() {
+  fetch("/mood_data")
+    .then(res => res.json())
+    .then(data => {
+      if (data.length > 0) {
+        latestMood = data[data.length - 1].mood;
+      }
+    });
+}
+
+/* Mood-based affirmations */
+const affirmationsByMood = {
+  happy: [
+    "I let myself fully enjoy this moment without worrying about what comes next.",
+    "You deserve to feel this lightness.",
+    "Notice what’s working — it matters."
+  ],
+  excited: [
+    "I trust my energy and follow what lights me up today",
+    "Something beautiful is unfolding, and I am ready to meet it wholeheartedly.",
+    "Lean into what’s making you feel alive."
+  ],
+  neutral: [
+    "I carry quiet strength that grows each time I choose myself.",
+    "Some days I move slowly, yet I am still deeply moving forward.",
+    "It’s okay to simply be."
+  ],
+  sad: [
+    "I am learning to meet my life with courage, not fear.",
+    "Each small step I take is proof that I have not given up.",
+    "Some days I move slowly, yet I am still deeply moving forward."
+  ],
+  stressed: [
+    "I am allowed to rest without questioning my worth or direction.",
+    "I am learning to meet my life with courage, not fear.",
+    "Even in uncertainty, I trust myself to find solid ground again"
+  ]
+};
+
+/* Open Affirmation Screen */
+function openAffirmations() {
+  hideAll();
+  document.getElementById("affirmationText").innerText = "";
+  document.getElementById("note").classList.add("folded");
+  loadLatestMood();
+  screen8.classList.remove("hidden");
+}
+
+/* Roll animation + affirmation */
+function rollAffirmation() {
+  const note = document.getElementById("note");
+  const text = document.getElementById("affirmationText");
+
+  note.classList.remove("unfolded");
+  note.classList.add("folded");
+
+  setTimeout(() => {
+    const pool = affirmationsByMood[latestMood] || affirmationsByMood.neutral;
+    const affirmation = pool[Math.floor(Math.random() * pool.length)];
+
+    text.innerText = affirmation;
+    note.classList.remove("folded");
+    note.classList.add("unfolded");
+  }, 400);
+}
+
+
 </script>
 
 </body>
