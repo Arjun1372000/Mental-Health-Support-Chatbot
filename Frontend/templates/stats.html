@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Mood History</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 40px;
+    }
+    canvas {
+      max-width: 800px;
+      margin: auto;
+    }
+  </style>
+</head>
+
+<body>
+  <h2>Your Mood History</h2>
+  <canvas id="moodChart"></canvas>
+
+  <script>
+    fetch("/mood_data")
+      .then(res => res.json())
+      .then(data => {
+        const labels = data.map(item => item.time);
+        const moods = data.map(item => item.mood);
+
+        const moodMap = {
+          excited: 5,
+          happy: 4,
+          neutral: 3,
+          sad: 2,
+          stressed: 1
+        };
+
+        const values = moods.map(m => moodMap[m]);
+
+        new Chart(document.getElementById("moodChart"), {
+          type: "line",
+          data: {
+            labels: labels,
+            datasets: [{
+              label: "Mood Level",
+              data: values,
+              borderColor: "#6c63ff",
+              backgroundColor: "rgba(108,99,255,0.2)",
+              tension: 0.3,
+              fill: true
+            }]
+          },
+          options: {
+            scales: {
+              y: {
+                ticks: {
+                  callback: value => {
+                    return Object.keys(moodMap).find(
+                      key => moodMap[key] === value
+                    );
+                  }
+                }
+              }
+            }
+          }
+        });
+      });
+  </script>
+</body>
+</html>
