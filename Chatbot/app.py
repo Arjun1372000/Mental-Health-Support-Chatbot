@@ -4,10 +4,139 @@ from distress_scoring import get_distress_level
 from response import generate_response
 from mood_tracker import log_mood, get_mood_history
 
-st.set_page_config(page_title="Mental Health Support Chatbot")
+# --------------------
+# Page Config
+# --------------------
+st.set_page_config(
+    page_title="Mānasika",
+    # page_icon="💜",
+    layout="centered"
+)
 
-st.title("Mental Health Support Chatbot")   
-st.caption("This chatbot provides emotional support and is not a medical professional.")
+st.markdown("""
+<style>
+/* Hide Streamlit chrome */
+#MainMenu {visibility: hidden;}
+footer {visibility: hidden;}
+header {visibility: hidden;}
+
+/* === OUTER APP BACKGROUND (DARK) === */
+.stApp {
+    background-color: #2E2B5F;
+    color: #ECEBFF;
+}
+
+/* Sidebar */
+section[data-testid="stSidebar"] {
+    background-color: #2E2B5F;
+    border-right: 1px solid #3D3A7A;
+}
+
+/* Sidebar text */
+section[data-testid="stSidebar"] * {
+    color: #ECEBFF;
+}
+
+/* === CHAT CONTAINER (LIGHT CARD) === */
+.block-container {
+    background-color: #ecebff6f;
+    padding-top: 2rem;
+    padding-bottom: 6rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    border-radius: 20px;
+    max-width: 720px;
+    margin-top: 2rem;
+}
+
+/* Title */
+h1 {
+    color: #6C63FF;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 0.3rem;
+}
+
+/* Caption */
+.stCaption {
+    text-align: center;
+    color: #4B4B6A;
+    margin-bottom: 1.8rem;
+}
+
+/* Chat spacing */
+[data-testid="stChatMessage"] {
+    margin-bottom: 0.6rem;
+}
+
+/* User bubble */
+[data-testid="stChatMessage"]:has(div[data-testid="stChatMessageAvatarUser"]) {
+    background-color: #6C63FF;
+    color: #FFFFFF;
+    border-radius: 18px;
+    padding: 12px 14px;
+    margin-left: auto;
+    max-width: 78%;
+}
+
+/* Assistant bubble */
+[data-testid="stChatMessage"]:has(div[data-testid="stChatMessageAvatarAssistant"]) {
+    background-color: #dcd9ff3b;
+    color: #1E1E2F;
+    border-radius: 18px;
+    padding: 12px 14px;
+    margin-right: auto;
+    max-width: 78%;
+    border: 1px solid #C8C6F5;
+}
+
+/* Chat input */
+textarea {
+    background-color: #F1F0FF !important;
+    color: #1E1E2F !important;
+    border-radius: 16px !important;
+    border: 1px solid #6C63FF !important;
+    padding: 12px !important;
+}
+
+/* Send button */
+button[kind="secondary"] {
+    background-color: #6C63FF !important;
+    color: #FFFFFF !important;
+    border-radius: 12px !important;
+}
+
+/* Expander */
+.st-expanderHeader {
+    color: #6C63FF;
+    font-weight: 600;
+}
+</style>
+""", unsafe_allow_html=True)
+
+# --------------------
+# Header
+# --------------------
+st.title("Mānasika")
+st.caption("A calm space for emotional support • Not a medical professional")
+
+# --------------------
+# Sidebar
+# --------------------
+with st.sidebar:
+    st.markdown("## 💜 Mānasika")
+    st.write(
+        "Mānasika is an AI-powered emotional support companion. "
+        "It listens, reflects, and supports — without judgment."
+    )
+    st.divider()
+
+    if st.button("🧹 Clear conversation"):
+        st.session_state.messages = []
+        st.session_state.turn_count = 0
+        st.session_state.emotion_history = []
+        st.session_state.last_emotion = None
+        st.session_state.last_bot_action = None
 
 # --------------------
 # Session State Setup
@@ -27,9 +156,6 @@ if "emotion_history" not in st.session_state:
 if "last_bot_action" not in st.session_state:
     st.session_state.last_bot_action = None
 
-if "last_suggested_activity" not in st.session_state:
-    st.session_state.last_suggested_activity = None
-
 # --------------------
 # Display Chat History
 # --------------------
@@ -46,12 +172,14 @@ if user_input:
     st.session_state.turn_count += 1
 
     # Show user message
-    st.session_state.messages.append({"role": "user", "content": user_input})
+    st.session_state.messages.append(
+        {"role": "user", "content": user_input}
+    )
     with st.chat_message("user"):
         st.markdown(user_input)
 
     # --------------------
-    # Handle short replies (context-aware)
+    # Short replies (context-aware)
     # --------------------
     short_yes = ["yes", "yeah", "yep", "sure", "okay", "ok"]
 
@@ -84,21 +212,21 @@ if user_input:
         st.session_state.emotion_history.append(emotion)
         st.session_state.emotion_history = st.session_state.emotion_history[-5:]
 
-    # Generate response (LLM-like logic is inside this function)
-    response = generate_response(
-        emotion=emotion,
-        distress_level=distress_level,
-        turn_count=st.session_state.turn_count,
-        user_text=user_input,
-        last_emotion=st.session_state.last_emotion,
-        emotion_history=st.session_state.emotion_history,
-        last_bot_action=st.session_state.last_bot_action
-    )
+    # Generate response
+    with st.spinner("Thinking..."):
+        response = generate_response(
+            emotion=emotion,
+            distress_level=distress_level,
+            turn_count=st.session_state.turn_count,
+            user_text=user_input,
+            last_emotion=st.session_state.last_emotion,
+            emotion_history=st.session_state.emotion_history,
+            last_bot_action=st.session_state.last_bot_action
+        )
 
-    # Detect bot intent for next turn
+    # Detect bot intent
     if "try" in response.lower() or "would you like" in response.lower():
         st.session_state.last_bot_action = "offered_coping"
-        st.session_state.last_suggested_activity = "grounding"
     else:
         st.session_state.last_bot_action = "general_support"
 
@@ -106,7 +234,9 @@ if user_input:
     log_mood(emotion, distress_level)
 
     # Show assistant response
-    st.session_state.messages.append({"role": "assistant", "content": response})
+    st.session_state.messages.append(
+        {"role": "assistant", "content": response}
+    )
     with st.chat_message("assistant"):
         st.markdown(response)
 
