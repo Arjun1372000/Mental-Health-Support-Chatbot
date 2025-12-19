@@ -1,4 +1,5 @@
-from analytics.load_data import load_features_df
+# from analytics.load_data import load_features_df
+import pandas as pd
 
 def basic_insights(df):
     return {
@@ -23,7 +24,7 @@ def recent_trend(df, window=7):
     }
 
 if __name__ == "__main__":
-    df = load_features_df()
+    df = pd.read_csv(r"mental_health_features.csv")  # Replace with load_features_df() in real use
 
     print("BASIC INSIGHTS")
     print(basic_insights(df))
