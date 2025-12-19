@@ -1,0 +1,26 @@
+GoEmotions dataset
+
+import kagglehub
+
+# Download latest version
+path = kagglehub.dataset_download("debarshichanda/goemotions")
+
+print("Path to dataset files:", path)
+
+Mental Health Dataset
+
+import kagglehub
+
+# Download latest version
+path = kagglehub.dataset_download("elvis23/mental-health-conversational-data")
+
+print("Path to dataset files:", path)
+
+The Depression Dataset
+
+import kagglehub
+
+# Download latest version
+path = kagglehub.dataset_download("arashnic/the-depression-dataset")
+
+print("Path to dataset files:", path)
