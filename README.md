@@ -1,8 +1,8 @@
-# 🧠 Mental Health Support Chatbot
+# Mental Health Support Chatbot
 
 An accessible, non-judgmental AI chatbot designed to provide emotional support and early intervention for mental health concerns.
 
-## ✨ Features
+## Features
 
 - **Emotion Detection**: Advanced NLP to identify user emotions and sentiment
 - **Intelligent Responses**: Context-aware, empathetic responses based on emotional state
@@ -12,7 +12,7 @@ An accessible, non-judgmental AI chatbot designed to provide emotional support a
 - **Privacy-First**: No raw text stored, only anonymized features
 - **User-Friendly Interface**: Clean, modern web interface
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Prerequisites
 - Python 3.8+
@@ -39,7 +39,7 @@ An accessible, non-judgmental AI chatbot designed to provide emotional support a
 4. **Open in browser**
    - Navigate to `http://localhost:5000`
 
-## 📋 Configuration
+## Configuration
 
 ### Environment Variables
 Create a `.env` file (copy from `.env.example`):
@@ -51,7 +51,7 @@ DATABASE_URL=sqlite:///./mental_health_chatbot.db
 
 See [CONFIG.md](CONFIG.md) for detailed configuration options.
 
-## 🏗️ Architecture
+## Architecture
 
 ```
 Mental-Health-Support-Chatbot/
@@ -75,7 +75,7 @@ Mental-Health-Support-Chatbot/
 └── CONFIG.md            # Detailed configuration guide
 ```
 
-## 🔧 Technology Stack
+## Technology Stack
 
 ### Backend
 - **Framework**: Flask
@@ -90,7 +90,7 @@ Mental-Health-Support-Chatbot/
 - **Real-time chat** via REST API
 - **Responsive design** for mobile & desktop
 
-## 📊 API Endpoints
+## API Endpoints
 
 ### Chat
 ```
@@ -117,14 +117,14 @@ GET /api/insights
 Response: { "success": boolean, "basic": object, "risk": object, "recent": object }
 ```
 
-## 🎯 Usage
+## Usage
 
 1. **Start a conversation** - Share your feelings with the chatbot
 2. **Receive feedback** - Get empathetic responses based on your emotional state
 3. **View insights** - Check emotional trends and patterns
 4. **Access resources** - Get crisis support information when needed
 
-## ⚠️ Crisis Support Resources
+## Crisis Support Resources
 
 **If you're in crisis, please reach out immediately:**
 
@@ -133,7 +133,7 @@ Response: { "success": boolean, "basic": object, "risk": object, "recent": objec
 - **International Association for Suicide Prevention**: https://www.iasp.info/resources/Crisis_Centres/
 - **Emergency Services**: **911** (US) or your local emergency number
 
-## 🔒 Privacy & Security
+## Privacy & Security
 
 - ✅ No raw text stored - only analyzed features
 - ✅ Conversations are encrypted in database
@@ -141,7 +141,7 @@ Response: { "success": boolean, "basic": object, "risk": object, "recent": objec
 - ✅ No third-party data sharing
 - ✅ GDPR-compliant architecture
 
-## 🚀 Deployment
+## Deployment
 
 ### Using Gunicorn (Production)
 ```bash
@@ -162,7 +162,7 @@ SECRET_KEY=<random-strong-key>
 DATABASE_URL=postgresql://user:password@host:5432/dbname
 ```
 
-## 📝 Development
+## Development
 
 ### Running Tests
 ```bash
@@ -178,7 +178,7 @@ pylint app ml db analytics
 ### Logs
 Check `app.log` for detailed application logs.
 
-## 🤝 Contributing
+## Contributing
 
 Contributions are welcome! Please:
 1. Fork the repository
@@ -186,18 +186,18 @@ Contributions are welcome! Please:
 3. Make your changes
 4. Submit a pull request
 
-## 📄 License
+## License
 
 This project is licensed under the MIT License - see [LICENSE](LICENSE) file for details.
 
-## ⚡ Performance Tips
+## Performance Tips
 
 - **First run**: Model download (~500MB) may take a few minutes
 - **Inference time**: ~2-3 seconds per message
 - **Memory usage**: ~2-3GB after models load
 - **Database**: SQLite suitable for <10k conversations; use PostgreSQL for production
 
-## 🐛 Troubleshooting
+## Troubleshooting
 
 ### Models not downloading
 ```bash
@@ -218,14 +218,14 @@ python db/database.py
 
 See [CONFIG.md](CONFIG.md) for detailed troubleshooting.
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - **HuggingFace** - For pre-trained NLP models
 - **Flask** - Web framework
 - **SQLAlchemy** - ORM
 - **Mental health professionals** - For guidance and best practices
 
-## 📞 Support
+## Support
 
 For questions or issues:
 1. Check the [CONFIG.md](CONFIG.md) documentation
